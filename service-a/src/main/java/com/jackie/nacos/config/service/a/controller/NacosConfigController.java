@@ -1,8 +1,8 @@
-package com.jackie.nacos.config.sample.controller;
+package com.jackie.nacos.config.service.a.controller;
 
 import com.alibaba.nacos.api.config.annotation.NacosValue;
-import com.alibaba.nacos.spring.context.annotation.config.NacosPropertySource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,17 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0
  */
 @RestController
-@NacosPropertySource(dataId = "example", autoRefreshed = true)
 @Slf4j
 public class NacosConfigController {
 
     @GetMapping("/config")
     public String get() {
         log.info("------config controller-------, info = {}", info);
-        return info;
+        log.info("databaseString = {}", dataBaseString);
+        return dataBaseString + "----" + info;
     }
 
-    //注意这个默认值的写法，":"前后不能有空格
-    @NacosValue(value="${info:local data}", autoRefreshed = true)
+    @Value("${info:localData}")
     private String info;
+
+    @Value("${spring.datasource.url:No database connection string found.}")
+    private String dataBaseString;
 }

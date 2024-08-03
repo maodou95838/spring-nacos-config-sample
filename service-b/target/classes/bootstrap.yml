@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: nacos-config-sample-service-b
+
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        prefix: example
+        namespace: dev
+        file-extension: yml
